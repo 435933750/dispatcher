@@ -1,0 +1,96 @@
+[{
+  "dataBase": "rc_video_chat",
+  "tables": [{
+    "name": "rc_user",
+    "output": "user_common_info",
+    "action": [
+      "INSERT",
+      "UPDATE"
+    ],
+    "pk": "id",
+    "handle": {
+      "UPDATE": {
+        "id": "user_id",
+        "app_id": "app_id",
+        "gender": "gender",
+        "country_id": "country_id",
+        "country_name": "country_name",
+        "gold_num": "balance",
+        "platform_type": "platform_type",
+        "pay_status": "pay_status",
+        "status": "status",
+        "create_time": "register_time",
+        "stone_version": "version",
+        "eroticism_behavior": "eroticism_behavior",
+        "sign_eroticism": "sign_eroticism",
+        "channel": "channel",
+        "type": "login_type"
+      },
+      "CUSTOM": {
+        "class|com.lx.supplement.custom.CustomVip": "vip",
+        "class|com.lx.supplement.custom.CustomNormal": "role"
+      }
+    }
+  },
+    {
+      "name": "rc_user_pay_record",
+      "output": "user_common_info",
+      "action": [
+        "INSERT"
+      ],
+      "pk": "user_id",
+      "handle": {
+        "SUM": {
+          "gold_num": "pay_gold_num_sum",
+          "money": "pay_money_sum"
+        },
+        "CUSTOM": {
+          "class|com.lx.supplement.custom.CustomPayTime": "frist_pay_time"
+        }
+      }
+    },
+    {
+      "name": "rc_goddess",
+      "output": "user_common_info",
+      "action": [
+        "INSERT"
+      ],
+      "pk": "user_id",
+      "handle": {
+        "CUSTOM": {
+          "class|com.lx.supplement.custom.CustomGoddess": "role"
+        }
+      }
+    },
+    {
+      "name": "rc_temp_user",
+      "output": "user_common_info",
+      "action": [
+        "INSERT"
+      ],
+      "pk": "user_id",
+      "handle": {
+        "CUSTOM": {
+          "class|com.lx.supplement.custom.CustomSignatory": "role"
+        }
+      }
+    }
+  ]
+},
+  {
+    "dataBase": "rc_live_chat_statistics",
+    "tables": [{
+      "name": "rc_user_praise_record",
+      "output": "user_common_info",
+      "action": [
+        "INSERT"
+      ],
+      "pk": "praise_user_id",
+      "handle": {
+        "CUSTOM": {
+          "class|com.lx.supplement.custom.CustomPraise": "thumbs"
+        }
+      }
+    }]
+  }
+]

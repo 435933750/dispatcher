@@ -1,0 +1,73 @@
+流程
+    0.建立$BASE_PATH
+    1.递归删除$UNMERGE_PATH下的所有$TMP_SUFFIX文件
+    1.读取zk下${ZK_ROOT}维护的每一个topic每一个分区的处理完毕的offset
+    2.如果读取到了数据，则使用指定offset方式创建kafkaStream，否则用${AUTO_OFFSET_RESET}方式读取 //todo 这里没有精细化到每个分区，如果新加了分区，则读取不到
+    3.handleData方法使用foreachRDD方式循环每一个rdd,子类实现clearData去清理数据,实现persist方法持久化数据
+    4.handleData始终认为,除了不可恢复的异常外（如持久化失败），其他的业务异常应该都由方法内捕获并且处理，不影响ssc的正常运转
+    5.如果遇见不可恢复的异常，则不进行业务提交以及offset提交,并且终止当前ssc程序
+
+注意
+    1.删除topic一定要删除zk上的offset topic
+
+
+
+CREATE EXTERNAL TABLE `real_time_mysql_data.alarm_scheme_minute`(
+  `create_time` string COMMENT '',
+  `user_id` string COMMENT '',
+  `register_time` string COMMENT '',
+  `platform_type` string COMMENT '',
+  `app_id` string COMMENT '',
+  `country_name` string COMMENT '',
+  `gender` string COMMENT '',
+  `new_user_flg` string COMMENT '',
+  `pay_status` string COMMENT '',
+  `frist_pay_flg` string COMMENT '',
+  `eroticism_behavior` string COMMENT '',
+  `channel` string COMMENT '',
+  `type` string COMMENT '',
+  `version` string COMMENT '',
+  `vip` string COMMENT '',
+  `sign_eroticism` string COMMENT '',
+  `role` string COMMENT '',
+  `thumbs` string COMMENT '',
+  `pay_money_sum` string COMMENT '',
+  `pay_gold_num_sum` string COMMENT '',
+  `status` string COMMENT '',
+  `gold_balance` string COMMENT '',
+  `remote_user_id` string COMMENT '',
+  `remote_register_time` string COMMENT '',
+  `remote_match_user_platform` string COMMENT '',
+  `remote_match_app_id` string COMMENT '',
+  `remote_match_user_country` string COMMENT '',
+  `remote_gender` string COMMENT '',
+  `remote_new_user_flg` string COMMENT '',
+  `remote_match_user_pay` string COMMENT '',
+  `remote_frist_pay_flg` string COMMENT '',
+  `remote_eroticism_behavior` string COMMENT '',
+  `remote_channel` string COMMENT '',
+  `remote_type` string COMMENT '',
+  `remote_version` string COMMENT '',
+  `remote_vip` string COMMENT '',
+  `remote_sign_eroticism` string COMMENT '',
+  `remote_role` string COMMENT '',
+  `remote_thumbs` string COMMENT '',
+  `remote_pay_money_sum` string COMMENT '',
+  `remote_pay_gold_num_sum` string COMMENT '',
+  `remote_status` string COMMENT '',
+  `remote_gold_balance` string COMMENT '',
+  `pay_platform` string COMMENT '',
+  `money` string COMMENT '',
+  `gold_num` string COMMENT '',
+  `is_friend` string COMMENT '',
+  `action_source` string COMMENT '',
+  `is_real_user` string COMMENT '',
+  `online_flg` string COMMENT '',
+  `comm` string COMMENT '',
+  `alarm_service_list` string COMMENT '',
+  `create_date` string COMMENT '')
+COMMENT 'schema明细表'
+PARTITIONED BY (dt string COMMENT '数据产生日期')
+ROW FORMAT delimited fields terminated by '\001'
+stored as TEXTFILE
+LOCATION 'hdfs://ha-nn-uri/ssc/real_time_mysql_data/alarm_scheme_minute'
