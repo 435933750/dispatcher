@@ -14,7 +14,7 @@
         <aeonbits.version>1.0.9</aeonbits.version>
         <fastjson.version>1.2.62</fastjson.version>
         <kafka.version>2.1.1</kafka.version>
-        <mysql>8.0.11</mysql>
+        <mysql>8.0.16</mysql>
         <scope.type>compile</scope.type>
         <!--<scope.type>provided</scope.type>-->
     </properties>
