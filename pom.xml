@@ -12,7 +12,7 @@
         <scala.version>2.11.8</scala.version>
         <hbase.version>1.4.10</hbase.version>
         <aeonbits.version>1.0.9</aeonbits.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <kafka.version>2.1.1</kafka.version>
         <mysql>8.0.11</mysql>
         <scope.type>compile</scope.type>
